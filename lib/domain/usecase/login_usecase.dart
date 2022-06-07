@@ -7,8 +7,8 @@ import 'package:complete_advanced_flutter/domain/usecase/base_usecase.dart';
 import 'package:dartz/dartz.dart';
 
 class LoginUseCase implements BaseUseCase<LoginUseCaseInput, Authentication> {
-  Repository _repository;
 
+  Repository _repository;
   LoginUseCase(this._repository);
 
   @override
@@ -16,9 +16,9 @@ class LoginUseCase implements BaseUseCase<LoginUseCaseInput, Authentication> {
       LoginUseCaseInput input) async {
     DeviceInfo deviceInfo = await getDeviceDetails();
     return await _repository.login(LoginRequest(
-        input.email, input.password, deviceInfo.identifier, deviceInfo.name));
+        input.email, input.password, deviceInfo.identifier, deviceInfo.name)
+    );
   }
-
 }
 
 class LoginUseCaseInput {
