@@ -32,6 +32,7 @@ class RouteGenerator {
       case Routes.registerRoute:
         return MaterialPageRoute(builder: (_) => RegisterView());
       case Routes.forgotPasswordRoute:
+        initForgotPasswordModule();
         return MaterialPageRoute(builder: (_) => ForgotPasswordView());
       case Routes.mainRoute:
         return MaterialPageRoute(builder: (_) => MainView());
@@ -45,10 +46,10 @@ class RouteGenerator {
   static Route<dynamic> unDefinedRoute() {
     return MaterialPageRoute(
         builder: (_) => Scaffold(
-              appBar: AppBar(
-                title: Text(AppStrings.noRouteFound),
-              ),
-              body: Center(child: Text(AppStrings.noRouteFound)),
-            ));
+          appBar: AppBar(
+            title: Text(AppStrings.noRouteFound),
+          ),
+          body: Center(child: Text(AppStrings.noRouteFound)),
+        ));
   }
 }

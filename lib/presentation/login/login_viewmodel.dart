@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:complete_advanced_flutter/domain/usecase/login_usecase.dart';
 import 'package:complete_advanced_flutter/presentation/base/baseviewmodel.dart';
 import 'package:complete_advanced_flutter/presentation/common/freezed_data_classes.dart';
@@ -16,6 +15,9 @@ class LoginViewModel extends BaseViewModel
   StreamController _isAllInputsValidStreamController =
   StreamController<void>.broadcast();
 
+  StreamController isUserLoggedInSuccessfullyStreamController = StreamController<
+      bool>();
+
   var loginObject = LoginObject("", "");
 
   LoginUseCase _loginUseCase;
@@ -28,6 +30,7 @@ class LoginViewModel extends BaseViewModel
     _userNameStreamController.close();
     _isAllInputsValidStreamController.close();
     _passwordStreamController.close();
+    isUserLoggedInSuccessfullyStreamController.close();
   }
 
   @override
@@ -52,16 +55,18 @@ class LoginViewModel extends BaseViewModel
     (await _loginUseCase.execute(
         LoginUseCaseInput(loginObject.userName, loginObject.password)))
         .fold(
-            (failure) => {
+            (failure) =>
+        {
           // left -> failure
           inputState.add(ErrorState(
               StateRendererType.POPUP_ERROR_STATE, failure.message))
         },
-            (data) => {
+            (data) {
           // right -> success (data)
-          inputState.add(ContentState())
+          inputState.add(ContentState());
 
           // navigate to main screen after the login
+          isUserLoggedInSuccessfullyStreamController.add(true);
         });
   }
 
@@ -83,12 +88,14 @@ class LoginViewModel extends BaseViewModel
 
   // outputs
   @override
-  Stream<bool> get outputIsPasswordValid => _passwordStreamController.stream
-      .map((password) => _isPasswordValid(password));
+  Stream<bool> get outputIsPasswordValid =>
+      _passwordStreamController.stream
+          .map((password) => _isPasswordValid(password));
 
   @override
-  Stream<bool> get outputIsUserNameValid => _userNameStreamController.stream
-      .map((userName) => _isUserNameValid(userName));
+  Stream<bool> get outputIsUserNameValid =>
+      _userNameStreamController.stream
+          .map((userName) => _isUserNameValid(userName));
 
   @override
   Stream<bool> get outputIsAllInputsValid =>
