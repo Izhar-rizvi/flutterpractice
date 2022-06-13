@@ -1,4 +1,4 @@
-package com.minafarid.complete_advanced_flutter
+package com.izhar.flutter_practice
 
 import io.flutter.embedding.android.FlutterActivity
 
