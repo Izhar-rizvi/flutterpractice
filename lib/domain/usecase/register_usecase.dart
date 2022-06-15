@@ -14,7 +14,11 @@ class RegisterUseCase implements BaseUseCase<RegisterUseCaseInput, Authenticatio
   Future<Either<Failure, Authentication>> execute(
       RegisterUseCaseInput input) async {
     return await _repository.register(RegisterRequest(
-      input.password,input.email,input.mobileNumber,input.profile,input.userName,input.countryMobileCode
+      input.countryMobileCode,
+      input.password,
+      input.userName,
+      input.email,
+      input.mobileNumber,input.profile,
     )
     );
   }
@@ -28,6 +32,8 @@ class RegisterUseCaseInput {
   String mobileNumber;
   String profile;
 
-  RegisterUseCaseInput(this.countryMobileCode, this.password, this.userName,
-      this.email, this.mobileNumber, this.profile);
+  RegisterUseCaseInput({
+    required this.countryMobileCode,required this.userName,required this.email, required this.password,
+    required this.mobileNumber, required this.profile
+});
 }

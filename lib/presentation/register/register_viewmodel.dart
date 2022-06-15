@@ -48,12 +48,12 @@ class RegisterViewModel extends BaseViewModel
     inputState.add(
         LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
     (await _registerUseCase.execute(RegisterUseCaseInput(
-      registerViewObject.mobileNumber,
-      registerViewObject.countryMobileCode,
-      registerViewObject.userName,
-      registerViewObject.email,
-      registerViewObject.password,
-      registerViewObject.profile,
+      countryMobileCode: registerViewObject.countryMobileCode,
+      password: registerViewObject.password,
+      userName: registerViewObject.userName,
+      profile: registerViewObject.profile,
+      email: registerViewObject.email,
+      mobileNumber: registerViewObject.mobileNumber
     )))
         .fold(
             (failure) => {
@@ -229,33 +229,18 @@ class RegisterViewModel extends BaseViewModel
 
   // -- private methods
   bool _isUserNameValid(String userName) {
-    return userName.length >= 8;
+    return userName.length >= 3;
   }
 
   bool _isMobileNumberValid(String mobileNumber) {
-    return mobileNumber.length >= 10;
+    return mobileNumber.length >= 9;
   }
 
   bool _isPasswordValid(String password) {
-    return password.length >= 8;
+    return password.length >= 7;
   }
 
   bool _validateAllInputs() {
-
-    print(registerViewObject.profile.isNotEmpty);
-    print('profile');
-        print(registerViewObject.email.isNotEmpty);
-    print('email');
-        print(registerViewObject.password.isNotEmpty);
-    print('password');
-        print(registerViewObject.mobileNumber.isNotEmpty);
-    print('mobile.no.');
-        print(registerViewObject.userName.isNotEmpty);
-    print('user name');
-        print(registerViewObject.countryMobileCode.isNotEmpty);
-        print(registerViewObject.countryMobileCode);
-    print('country mobile code');
-
     return registerViewObject.profile.isNotEmpty &&
         registerViewObject.email.isNotEmpty &&
         registerViewObject.password.isNotEmpty &&
